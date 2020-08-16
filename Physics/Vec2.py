@@ -14,3 +14,10 @@ class Vec2:
 
     def __str__(self):
         return f'[{self.x}, {self.y}]'
+
+    def round(self):
+        n_digits = 5
+        x = round(self.x, n_digits)
+        y = round(self.y, n_digits)
+        return Vec2(x, y)
+    
