@@ -2,18 +2,29 @@ from Physics.Vec2 import Vec2
 
 class Object:
 
+
     __counter = 0
 
 
-    def __init__(self, engine, is_static):
+    def __init__(self, is_static, world):
         self.id = Object.__counter
         Object.__counter += 1
 
-        self.engine = engine
+        self.world = world
         self.is_static = is_static
         self.position = Vec2()
         self.velocity = Vec2()
         self.acceleration = Vec2()
+
+
+    def update(self, delta):
+        if self.is_static:
+            return
+        self.velocity += (self.acceleration + self.world.gravity) * delta
+        self.dv = self.velocity * delta
+        self.position += self.dv
+
+        self.__round_values()
 
 
     def set_position(self, x, y):
@@ -26,4 +37,10 @@ class Object:
 
     def set_acceleration(self, x, y):
         self.acceleration = Vec2(x, y).round()
+
+
+    def __round_values(self):
+        self.position = self.position.round()
+        self.velocity = self.velocity.round()
+        self.acceleration = self.acceleration.round()
 
