@@ -28,15 +28,15 @@ class Object:
 
 
     def set_position(self, x, y):
-        self.position = Vec2(x, y).round()
+        self.position = Vec2(x, y)
 
 
     def set_velocity(self, x, y):
-        self.velocity = Vec2(x, y).round()
+        self.velocity = Vec2(x, y)
 
 
     def set_acceleration(self, x, y):
-        self.acceleration = Vec2(x, y).round()
+        self.acceleration = Vec2(x, y)
 
 
     def __round_values(self):
