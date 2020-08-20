@@ -1,4 +1,4 @@
-from Physics.Vec2 import Vec2
+from Krypt.Physics import Vec2
 
 class Object:
 

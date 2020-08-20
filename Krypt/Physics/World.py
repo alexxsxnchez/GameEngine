@@ -1,13 +1,13 @@
-from Physics.Factory import Factory
-from Physics.Object import Object
-from Physics.Vec2 import Vec2
+from Krypt.Physics import Factory
+from Krypt.Physics import Object
+from Krypt.Physics import Vec2
 
 class World:
-    def __init__(self, **karg):
+    def __init__(self, physics):
         self.objects = []
         self.colliders = []
         self.add = Factory(self)
-        gravity = karg.get("gravity", {})
+        gravity = physics.get("gravity", {})
         self.gravity = Vec2(gravity.get('x', 0), gravity.get('y', 0))
         print(f"gravity is {self.gravity}")
 

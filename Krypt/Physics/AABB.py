@@ -1,5 +1,5 @@
-from Physics.Object import Object
-from Physics.Vec2 import Vec2
+from Krypt.Physics import Object
+from Krypt.Physics import Vec2
 
 class AABB(Object):
     def __init__(self, min_x, min_y, max_x, max_y, is_static, world):

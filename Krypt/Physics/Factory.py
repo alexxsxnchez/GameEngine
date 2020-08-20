@@ -1,7 +1,5 @@
-from Physics.AABB import AABB
-from Physics.Collider import Collider
-from Physics.Object import Object
-from Physics.Vec2 import Vec2
+from Krypt.Physics import AABB
+from Krypt.Physics import Collider
 
 class Factory:
     def __init__(self, world):
