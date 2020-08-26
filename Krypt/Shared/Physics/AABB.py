@@ -1,10 +1,10 @@
-from Krypt.Physics import Object
-from Krypt.Physics import Vec2
+from Krypt.Shared.Physics import Object
+from Krypt.Shared.Physics import Vec2
 
 class AABB(Object):
     def __init__(self, min_x, min_y, max_x, max_y, is_static, world):
         assert min_x < max_x and min_y < max_y
-        super().__init__(world, is_static)
+        super().__init__(is_static, world)
         self.width = max_x - min_x
         self.height = max_y - min_y
         self.set_position(min_x, min_y)

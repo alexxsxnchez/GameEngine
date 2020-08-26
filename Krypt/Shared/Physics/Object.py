@@ -1,4 +1,4 @@
-from Krypt.Physics import Vec2
+from Krypt.Shared.Physics import Vec2
 
 class Object:
 
@@ -15,6 +15,7 @@ class Object:
         self.position = Vec2()
         self.velocity = Vec2()
         self.acceleration = Vec2()
+        self.dv = Vec2()
 
 
     def update(self, delta):

@@ -1,5 +1,7 @@
 import pygame
-from Krypt import Game, Network, Scene, Sprite
+import random
+from Krypt.Client import Game, Scene
+from Krypt.Shared.Network import ClientNetwork
 
 class MyScene(Scene):
     def __init__(self):
@@ -10,47 +12,76 @@ class MyScene(Scene):
             'down': False
         }
         self.h = False
+        self.player = None
+        self.network = ClientNetwork('', 2000)
+
 
     def preload(self):
         print("preloading")
-        self.load('assets/bomb.png')
+        self.load('assets/bomb.png', key='bomb', alpha=True)
 
 
     def setup(self):
         print("setting up scene")
+        self.player = self.factory.sprite(10, 10, 50, 50, 'bomb', has_physics=True)
+        #background = pygame.Surface()
+        def f():
+            print("collided")
+        def remove():
+            pass
+
+        for _ in range(1, 10):
+            x = random.randint(0, 600)
+            y = random.randint(0, 400)
+            wall = self.factory.sprite(x, y, 40, 40, 'bomb', has_physics=True, is_static=True)
+            self.factory.collider(self.player, wall, f, should_resolve=False)
 
 
     def update(self):
-        print("updating scene")
+        #print("updating scene")
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.stop()
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_w:
+                if event.key == pygame.K_w or event.key == pygame.K_UP:
                     self.controls['up'] = True
-                if event.key == pygame.K_a:
+                if event.key == pygame.K_a or event.key == pygame.K_LEFT:
                     self.controls['left'] = True
-                if event.key == pygame.K_d:
+                if event.key == pygame.K_d or event.key == pygame.K_RIGHT:
                     self.controls['right'] = True
-                if event.key == pygame.K_s:
+                if event.key == pygame.K_s or event.key == pygame.K_DOWN:
                     self.controls['down'] = True
                 self.h = True
             elif event.type == pygame.KEYUP:
-                if event.key == pygame.K_w:
+                if event.key == pygame.K_w or event.key == pygame.K_UP:
                     self.controls['up'] = False
-                if event.key == pygame.K_a:
+                if event.key == pygame.K_a or event.key == pygame.K_LEFT:
                     self.controls['left'] = False
-                if event.key == pygame.K_d:
+                if event.key == pygame.K_d or event.key == pygame.K_RIGHT:
                     self.controls['right'] = False
-                if event.key == pygame.K_s:
+                if event.key == pygame.K_s or event.key == pygame.K_DOWN:
                     self.controls['down'] = False
         if self.h:
             for entry in self.controls.items():
-                print(f"{entry[0]} : {entry[1]}")
+                pass
+                #print(f"{entry[0]} : {entry[1]}")
+        if self.controls['up']:
+            self.player.set_velocity(0, -100)
+        elif self.controls['down']:
+            self.player.set_velocity(0, 100)
+        elif self.controls['left']:
+            self.player.set_velocity(-100, 0)
+        elif self.controls['right']:
+            self.player.set_velocity(100, 0)
+        else:
+            self.player.set_velocity(0, 0)
+
 
 def main():
     config = {
-        'scene': MyScene()
+        'scene': MyScene(),
+        'width': 1080,
+        'height': 720
     }
     Game(config)
 

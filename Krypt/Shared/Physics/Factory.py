@@ -1,5 +1,5 @@
-from Krypt.Physics import AABB
-from Krypt.Physics import Collider
+from Krypt.Shared.Physics import AABB
+from Krypt.Shared.Physics import Collider
 
 class Factory:
     def __init__(self, world):
@@ -14,7 +14,7 @@ class Factory:
         return aabb
 
 
-    def collider(self, a, b, callback):
-        collider = Collider(a, b, callback)
+    def collider(self, a, b, callback=None, should_resolve=True):
+        collider = Collider(a, b, callback, should_resolve)
         self.colliders.append(collider)
         return collider

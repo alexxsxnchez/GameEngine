@@ -1,6 +1,5 @@
 import time
-
-from Krypt.Physics import World
+from Krypt.Shared.Physics import World
 
 class EventEmitter():
     def __init__(self):
@@ -44,7 +43,7 @@ class Engine(EventEmitter):
             now = time.time()
             delta += now - prev
             if delta < self.__timestep:
-                print("about to sleep")
+                # print("about to sleep")
                 time.sleep(self.__timestep)
                 continue
             self.emit(Engine.PREUPDATE)
@@ -53,6 +52,7 @@ class Engine(EventEmitter):
             while delta >= self.__timestep:
                 self.update(self.__timestep)
                 delta -= self.__timestep
+                # print(number_of_steps)
                 number_of_steps += 1
                 if number_of_steps > 240:
                     # panic
