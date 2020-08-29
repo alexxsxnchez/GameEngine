@@ -11,6 +11,7 @@ class Factory:
         self.__sprite_manager = sprite_manager
         self.__physics_factory = PhysicsFactory(physics_world)
 
+
     def sprite(self, x, y, width, height, image, has_physics=False, is_static=False):
         body = None
         if has_physics:
@@ -50,7 +51,6 @@ class Scene:
         """
         Users should not call this method
         """
-        print("initializing scene")
         self.__game = game
         self.factory = factory
         self.__sprite_manager = sprite_manager
@@ -97,6 +97,10 @@ class Scene:
         # TODO: optimize what exactly is drawn
         pygame.display.flip()
         self.__sprite_manager.clear_updated()
+
+
+    def change_scene(self, scene):
+        self.__game.change_scene(scene)
 
 
     def stop(self):

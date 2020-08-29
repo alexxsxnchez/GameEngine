@@ -9,7 +9,8 @@ class MyScene(Scene):
             'up': False,
             'left': False,
             'right': False,
-            'down': False
+            'down': False,
+            'restart': False
         }
         self.h = False
         self.player = None
@@ -51,7 +52,8 @@ class MyScene(Scene):
                     self.controls['right'] = True
                 if event.key == pygame.K_s or event.key == pygame.K_DOWN:
                     self.controls['down'] = True
-                self.h = True
+                if event.key == pygame.K_n:
+                    self.controls['restart'] = True
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_w or event.key == pygame.K_UP:
                     self.controls['up'] = False
@@ -61,6 +63,8 @@ class MyScene(Scene):
                     self.controls['right'] = False
                 if event.key == pygame.K_s or event.key == pygame.K_DOWN:
                     self.controls['down'] = False
+                if event.key == pygame.K_n:
+                    self.controls['restart'] = False
         if self.h:
             for entry in self.controls.items():
                 pass
@@ -75,6 +79,8 @@ class MyScene(Scene):
             self.player.set_velocity(100, 0)
         else:
             self.player.set_velocity(0, 0)
+        if self.controls['restart']:
+            self.change_scene(MyScene())
 
 
 def main():
