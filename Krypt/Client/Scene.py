@@ -21,11 +21,11 @@ class Factory:
         return sprite
 
 
-    def collider(self, a, b, callback=None, should_resolve=True):
+    def collider(self, a, b, callback=None, enable_collision=True):
         assert isinstance(a, Sprite)
         assert isinstance(b, Sprite)
         assert a.body and b.body
-        return self.__physics_factory.collider(a.body, b.body, callback, should_resolve)
+        return self.__physics_factory.collider(a.body, b.body, callback=callback, enable_collision=enable_collision)
 
 
     def sprite_group(self):

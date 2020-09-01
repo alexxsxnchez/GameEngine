@@ -23,6 +23,14 @@ class AABB(Object):
             self.max_bound.y > other.min_bound.y
 
 
+    def inside_bounds(self, bounds):
+        assert isinstance(bounds, AABB)
+        return self.min_bound.x >= bounds.min_bound.x and \
+            self.min_bound.y >= bounds.min_bound.y and \
+            self.max_bound.x <= bounds.max_bound.x and \
+            self.max_bound.y <= bounds.max_bound.y
+
+
     def set_position(self, x, y):
         super().set_position(x, y)
         self.__update_bounds_from_position()

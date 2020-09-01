@@ -1,3 +1,4 @@
+from Krypt.Shared.Physics import AABB
 from Krypt.Shared.Physics import Factory
 from Krypt.Shared.Physics import Vec2
 
@@ -5,10 +6,27 @@ class World:
     def __init__(self, physics):
         self.objects = []
         self.colliders = []
-        self.add = Factory(self)
-        gravity = physics.get("gravity", {})
+        gravity = physics.get('gravity', {})
         self.gravity = Vec2(gravity.get('x', 0), gravity.get('y', 0))
         print(f"gravity is {self.gravity}")
+        self.bounds = None
+        if 'world_bounds' in physics:
+            self.bounds = self.__create_world_bounds(physics)
+        self.add = Factory(self)
+
+
+    def __create_world_bounds(self, physics):
+            bounds = physics.get('world_bounds', {})
+            min_x = bounds.get('x1', 0)
+            min_y = bounds.get('y1', 0)
+            max_x = bounds.get('x2', 1000)
+            max_y = bounds.get('y2', 1000)
+            world_bounds = {}
+            world_bounds['left'] = AABB(min_x - 1, min_y, min_x, max_y, is_static=True, world=self)
+            world_bounds['top'] = AABB(min_x, min_y - 1, max_x, min_y, is_static=True, world=self)
+            world_bounds['right'] = AABB(max_x, min_y, max_x + 1, max_y, is_static=True, world=self)
+            world_bounds['bottom'] = AABB(min_x, max_y, max_x, max_y + 1, is_static=True, world=self)
+            return world_bounds
 
 
     def remove_object(self, obj):
@@ -66,7 +84,7 @@ class World:
 
     def __resolve_collisions(self, collisions):
         for collision in collisions:
-            if not collision.should_resolve:
+            if not collision.enable_collision:
                 collision.callback()
                 continue
             a = collision.a

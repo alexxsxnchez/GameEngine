@@ -15,6 +15,7 @@ class EventEmitter():
 
     def emit(self, event, *args, **kargs):
         callbacks = self.callbacks.get(event, [])
+        # remove all callbacks that should only be called once
         self.callbacks[event] = [callback for callback in callbacks if not callback[1]]
         for callback, _ in callbacks:
             callback(*args, **kargs)

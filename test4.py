@@ -18,7 +18,6 @@ class MyScene(Scene):
 
 
     def preload(self):
-        print("preloading")
         self.load('assets/bomb.png', key='bomb', alpha=True)
 
 
@@ -32,10 +31,10 @@ class MyScene(Scene):
             pass
 
         for _ in range(1, 10):
-            x = random.randint(0, 600)
-            y = random.randint(0, 400)
-            wall = self.factory.sprite(x, y, 40, 40, 'bomb', has_physics=True, is_static=True)
-            self.factory.collider(self.player, wall, f, should_resolve=False)
+            x = random.randint(12, 600)
+            y = random.randint(12, 400)
+            wall = self.factory.sprite(x, y, 90, 90, 'bomb', has_physics=True, is_static=False)
+            self.factory.collider(self.player, wall, callback=f)
 
 
     def update(self):
@@ -87,7 +86,13 @@ def main():
     config = {
         'scene': MyScene(),
         'width': 1080,
-        'height': 720
+        'height': 720,
+        'physics': {
+            'world_bounds': {
+                'x2': 1080,
+                'y2': 720
+            }
+        }
     }
     Game(config)
 
